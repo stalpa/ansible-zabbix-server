@@ -1,0 +1,5 @@
+mariadb_version: 10.0
+
+mysql_service_enabled: yes
+mysql_service_state: started
+

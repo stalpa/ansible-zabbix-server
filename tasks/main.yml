@@ -1,0 +1,92 @@
+---
+- name: "Install/Setup MariaDB"
+  include: install_mariadb.yml
+
+- name: "Install/Setup PHP"
+  include: install_php.yml
+
+- name: "Install/Setup Apache"
+  include: install_httpd.yml
+
+- name: "Install Epel"
+  include: install_epel.yml
+
+- name: "Installing repository gpg"
+  action: rpm_key state=present key={{ zabbixRpmGpgKey }}
+  tags:
+     - zbx
+
+- name: "Installing repository rpm"
+  action: yum pkg={{item}} state=present 
+  with_items:
+  - "{{ zabbixRepository }}"
+
+- name: "Install zabbix-server"
+  yum: name={{ item }} enablerepo=zabbix state=present
+  with_items:
+    - "{{ zabbixRpmServerMysql }}"
+    - "{{ zabbixRpmWeb }}"
+    - "{{ zabbixRpmWebMysql }}" 
+    - zabbix-agent
+    - zabbix-get
+
+# Settings for database
+- name: "Create a new database"
+#  mysql_db: name={{ DBName }} state=present
+  shell: echo "create database {{ DBUser }} character set utf8 collate utf8_bin;" | mysql 
+
+- name: "Create database user 'WITH GRANT OPTION'"
+#  mysql_user: name={{ DBUser }} password={{ DBPassword }} priv={{ DBName }}.*:ALL,GRANT state=present
+  shell: echo "grant all privileges on {{ DBName }}.* to zabbix@localhost identified by '{{ DBPassword }}';" | mysql
+
+- name: "Importing schema file"
+  shell: mysql -u{{ DBUser }} -p{{ DBPassword }} {{ DBName }} -e "show tables;" | wc -l
+  register: zabbixDatabaseTebles
+  changed_when: False
+- shell: zcat /usr/share/doc/zabbix-server-mysql-*/create.sql.gz | mysql -u{{ DBUser }} -p{{ DBPassword }} {{ DBName }}
+  when: zabbixDatabaseTebles|int == 0
+
+- name: "Copy PHP-files for zabbix-web"
+  shell: cp -R /usr/share/zabbix/ /var/www/html/
+
+# Setting zabbix_server.conf
+- name: Setting zabbix_server.conf
+  lineinfile: >-
+    dest='/etc/zabbix/zabbix_server.conf'
+    regexp='{{ item.regexp }}'
+    insertafter='{{ item.insertafter }}'
+    line='{{ item.line }}'
+  with_items:
+    - regexp: '^ListenPort='
+      insertafter: "^# ListenPort="
+      line: 'ListenPort={{ ListenPort }}'
+    - regexp: '^LogFile='
+      insertafter: "^# LogFile="
+      line: 'LogFile={{ LogFile }}'
+    - regexp: '^DBHost='
+      insertafter: "^# DBHost="
+      line: 'DBHost={{ DBHost }}'
+    - regexp: '^DBName='
+      insertafter: "^# DBName="
+      line: 'DBName={{ DBName }}'
+    - regexp: '^DBUser='
+      insertafter: "^# DBUser="
+      line: 'DBUser={{ DBUser }}'
+    - regexp: '^DBPassword='
+      insertafter: "^# DBPassword="
+      line: 'DBPassword={{ DBPassword }}'
+    - regexp: '^DBPort='
+      insertafter: "^# DBPort="
+      line: 'DBPort={{ DBPort }}'
+    - regexp: '^DBSocket='
+      insertafter: "^# DBSocket="
+      line: 'DBSocket={{ DBSocket }}'
+
+#- name: "Copy a new 'zabbix.conf.php' file into place"
+#  template: src=zabbix.conf.php.j2 dest=/etc/zabbix/web/zabbix.conf.php owner=apache group=apache mode=0644
+
+- name: "Start zabbix-server" 
+  service: name=zabbix-server state=started enabled=yes
+
+- name: "Restart httpd"
+  service: name=httpd state=restarted
