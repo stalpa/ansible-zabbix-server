@@ -1,6 +1,6 @@
 ---
 - name: "Installing repository gpg"
-  action: rpm_key 
+  rpm_key: 
     state: present
     key: "{{ zabbixRpmGpgKey }}"
 
