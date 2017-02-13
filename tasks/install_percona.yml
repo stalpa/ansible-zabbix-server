@@ -7,7 +7,9 @@
   - "{{ perconaRepository }}"
 
 - name: "Install MySQL"
-  yum: name={{ item }} state=present
+  yum: 
+    name: "{{ item }}"
+    state: present
   with_items:
     - Percona-Server-devel-56
     - Percona-Server-server-56
