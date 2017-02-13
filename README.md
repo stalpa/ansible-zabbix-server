@@ -1,23 +1,22 @@
 role name : ansible-zabbix-server
 
 playbook steps:
-* Install epel (fpint,iksemel)
+* Install epel-release,dependencies
 install_epel.yml
 * Install httpd
 install_httpd.yml
-* Install and setting Percona DB
+* Install and setup Percona DB
 install_percona.yml
-* Install and setting php (set php timezone)
+* Install and setup PHP
 install_php.yml
-* Include, Download/Install ZABBIX,
-* Setting database
+* Install/Setup ZABBIX,
 main.yml
 
 Actions:
-* Install epel-release, fpint, iksemel
+* Install epel-release, .. [packages]
 * Install httpd (start, enabled)
-* Install and setting Percona DB (start, enabled)
-* Install and setting PHP, set php.timezone
+* Install/Setup Percona DB (start, enabled)
+* Install/Setup PHP
 * Download/Install Zabbix Repository
 * Get/Import RPM-GPG-KEY-ZABBIX
 * Install Zabbix-Server
@@ -27,5 +26,5 @@ Actions:
         zabbix-get
 * Setting database (create DB, user)
 * Setting zabbix_server.conf
-* Copy a new 'zabbix.conf.php' file into place
+#* Copy 'zabbix.conf.php' file into the place '/etc/zabbix/web'
 * Start zabbix-server (enabled), Restart httpd
