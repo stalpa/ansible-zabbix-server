@@ -1,6 +1,4 @@
-# zabbix-v3-on-Centos-v6
-
-role name : zabbix_install
+role name : ansible-zabbix-server
 
 playbook steps:
 * Install epel (fpint,iksemel)
@@ -31,16 +29,3 @@ Actions:
 * Setting zabbix_server.conf
 * Copy a new 'zabbix.conf.php' file into place
 * Start zabbix-server (enabled), Restart httpd
-
-Info Needed:
-* CentOS 7.2
-* Zabbix 3.0
-
-P.S.
-#don't forget disable firewall
-systemctl stop firewalld && systemctl disable firewalld
-
-Documentation:
-https://www.zabbix.com/documentation/3.2/manual/installation/install_from_packages
-http://www.server-world.info/en/note?os=CentOS_7&p=zabbix30
-
