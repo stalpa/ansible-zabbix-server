@@ -1,7 +1,13 @@
 ---
 # Install httpd
 - name: "Install Apache"
-  yum: name=httpd state=latest
+  yum: 
+    name: httpd
+    state: latest
 
 - name: "Start httpd and enabled"
-  service: name=httpd state=started enabled=yes
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+

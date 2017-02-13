@@ -1,6 +1,8 @@
 ---
 - name: "Installing repository rpm"
-  action: yum pkg={{item}} state=present
+  yum:
+    pkg: "{{item}}" 
+    state: present
   with_items:
   - "{{ perconaRepository }}"
 
@@ -12,5 +14,8 @@
     - MySQL-python
 
 - name: "Start Myql and enabled"
-  service: name={{ mysql_service }} state={{ mysql_service_state }} enabled={{ mysql_service_enabled }}
+  service: 
+    name: "{{ mysql_service }}"
+    state: "{{ mysql_service_state }}"
+    enabled: "{{ mysql_service_enabled }}"
 

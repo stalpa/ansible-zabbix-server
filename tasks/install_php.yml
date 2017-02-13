@@ -1,6 +1,8 @@
 ---
 - name: "Install dependencies, Setup PHP"
-  yum: pkg={{ item }} state=present
+  yum: 
+    pkg: "{{ item }}" 
+    state: present
   with_items:
     - php56
     - php56-xml
@@ -16,7 +18,7 @@
     dest='/etc/php.ini'
     regexp="^date.timezone ="
     insertafter="^;date.timezone ="
-    line="date.timezone = {{ dateTimezone }}"
+    line="date.timezone = "{{ dateTimezone }}""
 
 - name: "Set php post_max_size"
   lineinfile: >-
