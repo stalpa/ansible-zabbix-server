@@ -41,14 +41,14 @@
 
 - name: "Importing schema file"
   shell: mysql -u{{ DBUser }} -p{{ DBPassword }} {{ DBName }} -e "show tables;" | wc -l
-  register: zabbixDatabaseTebles
+  register: zabbixDatabaseTables
   changed_when: False
 
-- name: "zcat"
+- name: "Zcat 'create.sql.gz' and Import 'schema.sql, 'images.sql', 'data.sql'"
   shell: zcat /usr/share/doc/zabbix-server-mysql-*/create.sql.gz | mysql -u{{ DBUser }} -p{{ DBPassword }} {{ DBName }}
-  when: zabbixDatabaseTebles|int == 0
+  when: zabbixDatabaseTables|int == 0
 
-- name: "Copy PHP-files for zabbix-web"
+- name: "Copy PHP-files for Frontend zabbix-web"
   shell: cp -R /usr/share/zabbix/ /var/www/html/
 
 # Setting zabbix_server.conf
