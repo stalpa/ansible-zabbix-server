@@ -37,7 +37,7 @@
   register: zabbixDatabaseTables
   changed_when: False
 
-- name: "Zcat 'create.sql.gz' and Import 'schema.sql, 'images.sql', 'data.sql'"
+- name: "Zcat 'create.sql.gz' | Import 'schema.sql, 'images.sql', 'data.sql'"
   shell: zcat /usr/share/doc/zabbix-server-mysql-*/create.sql.gz | mysql -u{{ DBUser }} -p{{ DBPassword }} {{ DBName }}
   when: zabbixDatabaseTables|int == 0
 
@@ -48,9 +48,9 @@
 - name: Setting zabbix_server.conf
   lineinfile: >-
     dest='/etc/zabbix/zabbix_server.conf'
-    regexp='{{ item.regexp }}'
-    insertafter='{{ item.insertafter }}'
-    line='{{ item.line }}'
+    regexp="{{ item.regexp }}"
+    insertafter="{{ item.insertafter }}"
+    line="{{ item.line }}"
   with_items:
     - regexp: '^ListenPort='
       insertafter: "^# ListenPort="
