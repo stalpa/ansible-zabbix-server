@@ -2,11 +2,11 @@
 - name: "Install Epel"
   include: install_epel.yml
 
-- name: "Install/Setup Apache"
-  include: install_httpd.yml
-
 - name: "Install/Setup PHP"
   include: install_php.yml
+
+- name: "Install/Setup Apache"
+  include: install_httpd.yml
 
 - name: "Install/Setup MySQL database by Percona"
   include: install_percona.yml
