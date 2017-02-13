@@ -32,18 +32,20 @@
 
 # Settings for database
 - name: "Create a new database"
-#  mysql_db: name={{ DBName }} state=present
   shell: echo "create database {{ DBUser }} character set utf8 collate utf8_bin;" | mysql 
+#mysql_db: name={{ DBName }} state=present
 
 - name: "Create database user 'WITH GRANT OPTION'"
-#  mysql_user: name={{ DBUser }} password={{ DBPassword }} priv={{ DBName }}.*:ALL,GRANT state=present
   shell: echo "grant all privileges on {{ DBName }}.* to zabbix@localhost identified by '{{ DBPassword }}';" | mysql
+#mysql_user: name={{ DBUser }} password={{ DBPassword }} priv={{ DBName }}.*:ALL,GRANT state=present
 
 - name: "Importing schema file"
   shell: mysql -u{{ DBUser }} -p{{ DBPassword }} {{ DBName }} -e "show tables;" | wc -l
   register: zabbixDatabaseTebles
   changed_when: False
-- shell: zcat /usr/share/doc/zabbix-server-mysql-*/create.sql.gz | mysql -u{{ DBUser }} -p{{ DBPassword }} {{ DBName }}
+
+- name: "zcat"
+  shell: zcat /usr/share/doc/zabbix-server-mysql-*/create.sql.gz | mysql -u{{ DBUser }} -p{{ DBPassword }} {{ DBName }}
   when: zabbixDatabaseTebles|int == 0
 
 - name: "Copy PHP-files for zabbix-web"
