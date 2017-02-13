@@ -1,0 +1,16 @@
+---
+- name: "Installing repository rpm"
+  action: yum pkg={{item}} state=present
+  with_items:
+  - "{{ perconaRepository }}"
+
+- name: "Install MySQL"
+  yum: name={{ item }} state=present
+  with_items:
+    - Percona-Server-devel-56
+    - Percona-Server-server-56
+    - MySQL-python
+
+- name: "Start Myql and enabled"
+  service: name={{ mysql_service }} state={{ mysql_service_state }} enabled={{ mysql_service_enabled }}
+

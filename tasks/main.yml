@@ -1,6 +1,9 @@
 ---
-- name: "Install/Setup MariaDB"
-  include: install_mariadb.yml
+- name: "Install/Setup MySQL database by Percona"
+  include: install_percona.yml 
+
+#- name: "Install/Setup MariaDB"
+#  include: install_mariadb.yml
 
 - name: "Install/Setup PHP"
   include: install_php.yml
@@ -13,8 +16,6 @@
 
 - name: "Installing repository gpg"
   action: rpm_key state=present key={{ zabbixRpmGpgKey }}
-  tags:
-     - zbx
 
 - name: "Installing repository rpm"
   action: yum pkg={{item}} state=present 
