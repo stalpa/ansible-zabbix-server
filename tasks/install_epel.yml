@@ -1,10 +1,15 @@
 ---
 # Install epel
 - name: "Install epel-release"
-  yum: name=epel-release state=latest
+  yum: 
+    name: epel-release
+    state: latest
 
 - name: "Install dependencies"
-  yum: name={{ item }} enablerepo=epel state=latest
+  yum: 
+    name: "{{ item }}"
+    enablerepo: epel
+    state: latest
   with_items:
     - fping
     - iksemel
