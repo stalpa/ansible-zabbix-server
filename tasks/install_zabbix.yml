@@ -44,11 +44,11 @@
   shell: cp -R /usr/share/zabbix/ /var/www/html/
 
 - name: "Setting zabbix_server.conf"
-  lineinfile: >-
-    dest='/etc/zabbix/zabbix_server.conf'
-    regexp="{{ item.regexp }}"
-    insertafter="{{ item.insertafter }}"
-    line="{{ item.line }}"
+  lineinfile:
+    dest: '/etc/zabbix/zabbix_server.conf'
+    regexp: "{{ item.regexp }}"
+    insertafter: "{{ item.insertafter }}"
+    line: "{{ item.line }}"
   with_items:
     - regexp: '^ListenPort='
       insertafter: "^# ListenPort="
