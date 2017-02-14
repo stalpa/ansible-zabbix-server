@@ -1,5 +1,5 @@
 ---
-- name: "Install dependencies, Setup PHP"
+- name: "Install dependencies | Setup PHP"
   yum: 
     pkg: "{{ item }}" 
     state: present
@@ -12,6 +12,7 @@
     - php56-mysqlnd
     - php56-bcmath
     - php56-mbstring
+  notify: restart httpd
 
 - name: "Set php timezone"
   lineinfile: >- 

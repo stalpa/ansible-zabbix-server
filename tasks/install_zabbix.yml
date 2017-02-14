@@ -20,7 +20,6 @@
     - "{{ zabbixRpmServerMysql }}"
     - "{{ zabbixRpmWeb }}"
     - "{{ zabbixRpmWebMysql }}"
-    - zabbix-agent
     - zabbix-get
 
 # Settings for database
@@ -44,8 +43,7 @@
 - name: "Copy PHP-files for Frontend zabbix-web"
   shell: cp -R /usr/share/zabbix/ /var/www/html/
 
-# Setting zabbix_server.conf
-- name: Setting zabbix_server.conf
+- name: "Setting zabbix_server.conf"
   lineinfile: >-
     dest='/etc/zabbix/zabbix_server.conf'
     regexp="{{ item.regexp }}"
@@ -76,13 +74,7 @@
     - regexp: '^DBSocket='
       insertafter: "^# DBSocket="
       line: 'DBSocket={{ DBSocket }}'
+  notify: restart zabbix-server
 
 #- name: "Copy a new 'zabbix.conf.php' file into place"
 #  template: src=zabbix.conf.php.j2 dest=/etc/zabbix/web/zabbix.conf.php owner=apache group=apache mode=0644
-
-- name: "Start zabbix-server and enabled"
-  service:
-    name: zabbix-server
-    state: started
-    enabled: yes
-  notify: restart httpd
