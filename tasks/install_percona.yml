@@ -4,7 +4,7 @@
     pkg: "{{item}}" 
     state: present
   with_items:
-  - "{{ perconaRepository }}"
+  - "{{ percona_Repository }}"
 
 - name: "Install MySQL"
   yum: 

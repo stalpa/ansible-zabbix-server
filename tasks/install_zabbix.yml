@@ -2,14 +2,14 @@
 - name: "Installing repository gpg"
   rpm_key: 
     state: present
-    key: "{{ zabbixRpmGpgKey }}"
+    key: "{{ zabbix_RpmGpgKey }}"
 
 - name: "Installing repository rpm"
   yum:
     pkg: "{{item}}"
     state: present
   with_items:
-  - "{{ zabbixRepository }}"
+  - "{{ zabbix_Repository }}"
 
 - name: "Install zabbix-server"
   yum: 
@@ -17,9 +17,9 @@
     enablerepo: zabbix
     state: present
   with_items:
-    - "{{ zabbixRpmServerMysql }}"
-    - "{{ zabbixRpmWeb }}"
-    - "{{ zabbixRpmWebMysql }}"
+    - "{{ zabbix_RpmServerMysql }}"
+    - "{{ zabbix_RpmWeb }}"
+    - "{{ zabbix_RpmWebMysql }}"
     - zabbix-get
 
 # Settings for database
