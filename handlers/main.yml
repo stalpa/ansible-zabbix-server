@@ -1,12 +1,21 @@
 ---
-#- name: restart mariadb
-#  service: name=mariadb state=restarted enabled=yes
-
-- name: restart mysql
-  service: name=mysql state=restarted enabled=yes
+- name: restart MySQL
+  service: 
+    name: mysql
+    state: restarted
+    enabled: yes
+  notify: restart MySQL
 
 - name: restart zabbix-server
-  service: name=zabbix-server state=restarted enabled=yes
+  service: 
+    name: zabbix-server
+    state: restarted
+    enabled: yes
+  notify: restart zabbix-server
 
 - name: restart httpd
-  service: name=httpd state=restarted enabled=yes
+  service: 
+    name: httpd
+    state: restarted
+    enabled: yes
+  notify: restart httpd
