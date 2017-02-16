@@ -12,7 +12,8 @@
     - php56-mysqlnd
     - php56-bcmath
     - php56-mbstring
-  notify: restart httpd
+  notify:
+    - restart httpd
 
 - name: "Set php timezone"
   lineinfile: 

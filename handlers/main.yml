@@ -4,18 +4,21 @@
     name: mysql
     state: restarted
     enabled: yes
-  notify: restart MySQL
+  notify:
+    - restart MySQL
 
 - name: restart zabbix-server
   service: 
     name: zabbix-server
     state: restarted
     enabled: yes
-  notify: restart zabbix-server
+  notify:
+    - restart zabbix-server
 
 - name: restart httpd
   service: 
     name: httpd
     state: restarted
     enabled: yes
-  notify: restart httpd
+  notify:
+    - restart httpd

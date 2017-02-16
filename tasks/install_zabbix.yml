@@ -9,7 +9,7 @@
     pkg: "{{item}}"
     state: present
   with_items:
-  - "{{ zabbix_Repository }}"
+    - "{{ zabbix_Repository }}"
 
 - name: "Install zabbix-server"
   yum: 
@@ -37,7 +37,7 @@
   changed_when: False
 
 - name: "Zcat 'create.sql.gz' | Import 'schema.sql, 'images.sql', 'data.sql'"
-  shell: zcat /usr/share/doc/zabbix-server-mysql-*/create.sql.gz | mysql -u{{ DBUser }} -p{{ DBPassword }} {{ DBName }}
+  shell: zcat /usr/share/doc/zabbix-server-mysql-*/create.sql.gz | mysql -u"{{ DBUser }}" -p"{{ DBPassword }}" "{{ DBName }}"
   when: zabbixDatabaseTables|int == 0
 
 - name: "Copy PHP-files for Frontend zabbix-web"
@@ -74,7 +74,8 @@
     - regexp: '^DBSocket='
       insertafter: "^# DBSocket="
       line: 'DBSocket={{ DBSocket }}'
-  notify: restart zabbix-server
+  notify: 
+    - restart zabbix-server
 
 #- name: "Copy a new 'zabbix.conf.php' file into place"
 #  template: src=zabbix.conf.php.j2 dest=/etc/zabbix/web/zabbix.conf.php owner=apache group=apache mode=0644
