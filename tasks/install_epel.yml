@@ -11,6 +11,7 @@
     enablerepo: epel
     state: latest
   with_items:
+    - "{{ d}}
     - fping
     - iksemel
     - net-snmp

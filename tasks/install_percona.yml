@@ -1,7 +1,7 @@
 ---
 - name: "Installing repository rpm"
   yum:
-    pkg: "{{item}}" 
+    pkg: "{{ item }}" 
     state: present
   with_items:
     - "{{ percona_Repository }}"
