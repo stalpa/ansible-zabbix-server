@@ -1,5 +1,5 @@
 ---
-- name: "Installing repository rpm"
+- name: "Installing Percona repository"
   yum:
     pkg: "{{ item }}" 
     state: present
