@@ -6,7 +6,7 @@
 
 - name: "Installing repository rpm"
   yum:
-    pkg: "{{item}}"
+    pkg: "{{ item }}"
     state: present
   with_items:
     - "{{ zabbix_Repository }}"
@@ -22,7 +22,7 @@
     - "{{ zabbix_RpmWebMysql }}"
     - zabbix-get
 
-# Settings for database
+# ==> Settings for database
 - name: "Create a new database"
   shell: echo "create database {{ DBUser }} character set utf8 collate utf8_bin;" | mysql
   #mysql_db: name={{ DBName }} state=present
