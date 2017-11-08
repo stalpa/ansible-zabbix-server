@@ -1,9 +1,9 @@
-role name : ansible-zabbix-server for Ubuntu instance 
+role name : ansible-zabbix-server for Amazon Linux instance 
 
 playbook steps:
 * Install release,dependencies
 install_epel.yml
-* Install apache2
+* Install apache
 install_httpd.yml
 * Install and setup Percona DB
 install_percona.yml
@@ -23,4 +23,4 @@ Actions:
         zabbix-web-mysql
 * Setting database (create DB, user)
 * Setting zabbix_server.conf
-* Start zabbix-server (enabled), Restart apache2
+* Start zabbix-server (enabled), Restart apache
