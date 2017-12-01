@@ -4,15 +4,7 @@
     pkg: "{{ item }}" 
     state: present
   with_items:
-    - php71
-    - php71-xml
-    - php71-xmlrpc
-    - php71-soap
-    - php71-gd
-    - php71-ldap
-    - php71-mysqlnd
-    - php71-bcmath
-    - php71-mbstring
+    - "{{ php_packages }}"
   notify:
     - restart httpd
 

@@ -20,6 +20,20 @@ zabbix_RpmWebMysql: http://repo.zabbix.com/zabbix/3.4/rhel/6/x86_64/deprecated/z
 # Percona repository specified to use in the installation
 percona_Repository: http://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm
 
+
+#
+# PHP packages
+php_packages:
+    - php71
+    - php71-xml
+    - php71-xmlrpc
+    - php71-soap
+    - php71-gd
+    - php71-ldap
+    - php71-mysqlnd
+    - php71-bcmath
+    - php71-mbstring
+
 #
 # Database settings and ZABBIX configuration
 #  '/etc/zabbix/zabbix.conf','/etc/zabbix/web/zabbix.conf.php'
