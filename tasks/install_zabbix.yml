@@ -76,6 +76,7 @@
       line: 'DBSocket={{ DBSocket }}'
   notify: 
     - restart zabbix-server
+    - restart httpd
 
 #- name: "Copy a new 'zabbix.conf.php' file into place"
 #  template: src=zabbix.conf.php.j2 dest=/etc/zabbix/web/zabbix.conf.php owner=apache group=apache mode=0644
