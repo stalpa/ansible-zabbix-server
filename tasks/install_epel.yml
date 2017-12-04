@@ -11,5 +11,5 @@
     enablerepo: epel
     state: latest
   with_items:
-    - "{{ packages }}
+    - "{{ packages }}"
 
