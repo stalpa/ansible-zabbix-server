@@ -1,5 +1,5 @@
 ---
-# Install epel
+# => Install epel
 - name: "Install epel-release"
   yum: 
     name: epel-release
@@ -11,13 +11,5 @@
     enablerepo: epel
     state: latest
   with_items:
-    - fping
-    - iksemel
-    - net-snmp
-    - libxml2-devel
-    - libssh2-devel
-    - net-snmp-devel
-    - curl-devel
-    - unixODBC-devel
-    - OpenIPMI-devel
+    - "{{ packages }}
 

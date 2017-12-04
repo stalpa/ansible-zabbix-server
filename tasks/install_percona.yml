@@ -4,16 +4,14 @@
     pkg: "{{ item }}" 
     state: present
   with_items:
-    - "{{ percona_Repository }}"
+    - "{{ percona_repository }}"
 
 - name: "Install MySQL"
   yum: 
     name: "{{ item }}"
     state: present
   with_items:
-    - Percona-Server-devel-56
-    - Percona-Server-server-56
-    - MySQL-python
+    - "{{ percona_packages }}"
 
 - name: "Start Myql and enabled"
   service: 
